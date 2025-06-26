@@ -1,0 +1,118 @@
+# Demographic and Socioeconomic Mapping Tool (MVP)
+
+## Project Overview
+
+Problem: Currently, identifying spatial correlations between disparate demographic and socioeconomic datasets is a manual and time-intensive process, hindering rapid strategic planning and insight generation for various professional fields.
+
+Solution (MVP): This project aims to deliver a basic (MVP) interactive mapping tool designed to address this challenge. The tool will display a dynamic, color-coded map of the United States, representing various demographic and socioeconomic data. Users will be able to intuitively manipulate this map by turning specific data layers (e.g., age, income, education) on or off via filters and toggles located in a legend area. These toggles can be used in combination to create "heatmaps," visually highlighting geographic areas with the highest concentration or crossover of selected factors. The primary purpose is to enable users to quickly and intuitively identify and highlight correlations between these demographic and socioeconomic factors.
+
+Target User(s): This MVP is primarily designed for fundraising analysts, political strategists, and market researchers seeking to identify target geographic segments based on specific population characteristics.
+
+### Demographic Factors to Include
+
+* Education Level
+* Age or Generational Cohort
+* Geographic Location or Locale
+* Income Level
+* Gender
+
+## Frameworks
+
+* Python - preferred language and frameworks
+* venv - python virtual environment of choice
+* Pandas - for data manipulation
+* GeoPandas - for geospatial data and mapping
+* Requests - for API requests
+* FastAPI - for backend framework
+* censusdis - for Census Data API
+* Folium - for the mapping and visualizations, frontend framework
+* TIGER/Line Shapefiles - for state mapping
+* Parquet - for API data storage
+* Docker - for containerization
+
+### MVP Technical Approach Summary:
+
+* Python Backend: The core logic will reside in a FastAPI application, utilizing Pandas, GeoPandas, requests, and censusdis for data handling and API interactions.
+* Mapping/Visualization: Folium will be leveraged to generate interactive HTML maps.
+* Frontend (initial MVP): Simple HTML templates, served by FastAPI, will embed the Folium-generated maps, allowing for basic display and user interaction with map layers via client-side JavaScript provided by Folium/Leaflet.
+* Data: Geographic boundary data (TIGER/Line Shapefiles) and Census demographic data will be pre-downloaded and stored as flat files (e.g., GeoJSON for boundaries, Parquet for tabular data) for efficient local access during development and initial deployment.
+
+## Out of Scope for MVP
+
+Do not include any of the following in the MVP:
+
+* User authentication or accounts
+* Saving or sharing custom map configurations
+* Ability to upload custom datasets
+* County and Census Tract data (Data will be presented at the State level only)
+* Exporting map as images or data
+
+## User Stories / Use Cases
+
+As a **Fundraising Analyst**, I want to:
+
+* View a base map of the United States so I can orient myself geographically.
+* Select a single demographic data layer (e.g., "Education Level") so I can see its distribution across US states, represented by color intensity.
+* Select a single socioeconomic data layer (e.g., "Income Level") so I can see its distribution across US states, represented by color intensity.
+* Select multiple data layers (e.g., "Education Level" AND "Income Level") so I can identify states that rank high in both selected categories (creating a "heatmap" of correlation).
+* Deselect an active data layer so I can remove it from the map display.
+* See a legend that explains what the colors/patterns on the map represent for the active data layers.
+* Have the map update dynamically when I change filter selections without needing a full page refresh.
+
+## Functional Requirements
+
+The system MUST:
+
+* Display an interactive map of the 50 United States and D.C. upon initial load.
+* Provide a set of toggleable controls (filters) for each "Demographic Factor to Include" (Education Level, Age/Generational Cohort, Geographic Location/Locale, Income Level, Gender).
+* Allow single-selection of any individual demographic/socioeconomic layer.
+* Allow multi-selection (combination) of any two or more demographic/socioeconomic layers.
+* Dynamically update the map's visual representation (colors/patterns) within 2-3 seconds upon filter selection changes.
+
+    Calculate and display "heat" based on the combined selected factors:
+
+        The calculation method for combination (e.g., simple sum of normalized scores, or a more complex weighting) should be clearly defined. Initial suggestion: For MVP, assume a simple additive scoring of normalized values for selected layers.
+
+* Display a clear legend that automatically updates to reflect the currently active data layers and their corresponding color/pattern interpretations.
+* Fetch data for each layer from the Census API using censusdis and process it with Pandas/GeoPandas.
+* Store pre-processed geographic boundaries as GeoJSON.
+* Store pre-processed tabular demographic data as Parquet files.
+* Serve HTML content generated by Folium via FastAPI endpoints.
+* Ensure all data presented is aggregated at the State level.
+
+## Non-Functional Requirements
+
+### Performance:
+
+* Response Time: Map loading and filter application should be reasonably responsive (e.g., target under 5 seconds for a typical internet connection).
+* Scalability: The MVP is not expected to handle a massive number of concurrent users; focus on individual user experience, and getting the app to work correctly.
+
+### Usability:
+
+* Intuitive UI: The interface for toggling layers should be clear and easy to understand for the target users.
+* Visual Clarity: Map colors and patterns should be distinguishable and effectively convey data.
+* Accessibility: Ensure that colors and patterns are not failing color blindness basic accessibility concerns.
+
+### Reliability:
+
+* API Resilience: Basic error handling for Census API failures (e.g., display a message if data cannot be loaded).
+* Data Integrity: Ensure pre-processed data is consistently loaded and displayed correctly.
+
+### Maintainability:
+
+* Code Structure: Promote modular and clean code that is easy to understand and extend for future iterations.
+* Dependencies: Manage dependencies effectively using venv and requirements.txt.
+
+## Assumptions and Dependencies
+
+### Assumptions:
+
+* Publicly available Census data (via censusdis) will be sufficient for all required demographic and socioeconomic layers.
+* Folium/Leaflet will provide adequate visualization capabilities for the MVP's heatmap and layering requirements.
+* Users will have a modern web browser capable of rendering interactive JavaScript maps.
+
+### Dependencies:
+
+* Reliable access to the U.S. Census Bureau API.
+* Availability of TIGER/Line Shapefiles for US state boundaries.
+* Stable versions of all listed Python packages.

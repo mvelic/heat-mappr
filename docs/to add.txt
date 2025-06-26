@@ -1,0 +1,93 @@
+Here are some additional considerations, both technical and AI-instruction-related, that you might be overlooking:
+
+I. Technical Considerations (Adding Depth to "Frameworks" and "MVP Technical Approach")
+
+    Specific Data Needs & Granularity:
+
+        Which ACS Tables? You've mentioned "Demographic Factors to Include." The AI will eventually need to know which specific tables from the American Community Survey (ACS) via censusdis correspond to "Education Level," "Income Level," "Age," etc.
+
+            Recommendation: As a planning step (before involving the AI in data fetching), identify 1-2 specific Census API variables/tables for each demographic factor. This is a crucial step that you'll need to do manually as censusdis provides access to the raw Census data.
+
+Example in PRD (under Demographic Factors):
+
+    Education Level: B15003_001E (Total Population 25+, various educational attainment variables)
+
+    Income Level: B19013_001E (Median Household Income)
+
+Age: B01002_001E (Median Age)
+
+        Why for AI: This prevents the AI from guessing or picking less relevant data.
+
+Data Normalization/Standardization:
+
+    When you combine layers for "heatmaps," how will the data from different layers be scaled or normalized so they're comparable? Income figures are vastly different from counts of people.
+
+    Recommendation: Decide on a simple normalization strategy for the MVP.
+
+        Example in PRD (under Functional Requirements, point 6): "For combining layers into heatmaps, all selected data values for a given state will be min-max normalized (scaled to 0-1) before being summed to create the 'heat' score."
+
+        Why for AI: This is a critical mathematical detail for your "heatmaps" that the AI needs to implement correctly.
+
+Color Schemes / Theming:
+
+    How will the map colors be chosen? A simple sequential color scale (e.g., light to dark blue for increasing value) is common for choropleths. What if multiple layers are combined?
+
+    Recommendation: Specify a basic color strategy.
+
+        Example in PRD (under Non-Functional Requirements, Usability): "Maps will use a sequential color scheme (e.g., light to dark blue/green) to represent data intensity for single layers. For combined layers, a divergent or a distinct sequential scheme will be used where color intensity represents 'heat' and hue may differentiate base factors if necessary (MVP focus on intensity)."
+
+        Why for AI: Guides the AI on map visual aesthetics and consistency.
+
+User Interface (UI) Layout (Basic for MVP):
+
+    You mentioned "filters and toggles located in a legend area." How will this area be laid out? A simple sidebar? A top navigation bar?
+
+    Recommendation: A very basic wireframe idea (even just descriptive text) can help.
+
+        Example in PRD (under Functional Requirements): "The UI will consist of a full-screen map, with a collapsible sidebar or fixed panel on the left/top containing checkboxes/toggles for each demographic factor and a dynamic legend."
+
+        Why for AI: Gives the AI clues on how to structure the HTML templates and where to place controls.
+
+Handling Missing Data:
+
+    What happens if the Census API doesn't have data for a specific state for a variable, or if a variable has many nulls?
+
+    Recommendation: A simple rule for the MVP.
+
+        Example in PRD (under Functional Requirements): "States with missing data for a selected layer will be displayed with a neutral color (e.g., grey) and excluded from heatmap calculations for that layer."
+
+        Why for AI: Prevents unexpected behavior or errors when processing data.
+
+II. AI Instructions Refinement (Adding to your "AI Development Guidelines")
+
+    Explicitly State Iterative Approach:
+
+        Reinforce that you expect to build this piece by piece.
+
+        Add to Guidelines (under Modular and Incremental Development): "Understand that this project will be built iteratively. I will request components one by one (e.g., first data loading, then map display, then filters). Do not attempt to generate the entire application code at once."
+
+    Preferred Code Structure/Organization:
+
+        If you have a preference for how files are organized (even for an MVP), tell the AI.
+
+        Add to Guidelines (under Modular and Incremental Development): "Suggest a logical file structure (e.g., main.py for FastAPI app, data_loader.py for data functions, templates/ for HTML) and follow it consistently in all code snippets."
+
+    No Excessive Explanations (Unless Requested):
+
+        Sometimes AIs can be verbose. You want explanations, but not overwhelming ones.
+
+        Add to Guidelines (under Learning-Oriented Approach): "Provide concise explanations for code. Avoid overly lengthy prose or repetitive summaries unless I explicitly ask for a deeper dive or more detailed explanation."
+
+    Prioritize Python Code:
+
+        Make it clear that the primary output should be runnable Python code, with supporting HTML/CSS/JS only where absolutely necessary for the frontend.
+
+        Add to Guidelines (under General Principles): "The primary output for each request should be executable Python code, unless I specifically request HTML, CSS, or JavaScript snippets."
+
+    Acknowledge and Apply Previous Instructions:
+
+        Remind the AI to build upon previous interactions.
+
+        Add to Guidelines (under Interactive and Iterative Feedback): "When generating new code, always consider and integrate previously provided code snippets and architectural decisions. Avoid proposing solutions that contradict prior, accepted implementations."
+
+By considering these points, you'll create an even more robust framework for your project and provide the AI with highly specific guidance, leading to a smoother learning and development experience.
