@@ -32,7 +32,11 @@ To ensure the code generated aligns with the project's goals and facilitates my 
 6. Efficiency and Performance (Pragmatic for MVP):
 * Reasonable performance: Aim for code that is reasonably performant for the MVP's scope (e.g., processing state-level data in a timely manner). Avoid micro-optimizations that add complexity without significant benefit for this initial stage.
 * Data handling: Prioritize efficient data loading and processing using Pandas and GeoPandas features.
-* API Limiting: Include rate limits on all API endpoints.
+* API Limiting: Include rate limits on all incoming requests to API endpoints hosted by the MVP.
+* Outgoing API Request Handling: Implement robust and respectful handling for all outgoing API requests to external services (e.g., Census Data API). This includes:
+    * Rate Limiting: Adhere to the documented rate limits of the external API to prevent exceeding quotas and getting blocked.
+    * Error Handling & Retries: Implement basic error handling for common API response issues (e.g., network errors, 4xx/5xx status codes). Consider using a retry mechanism with exponential backoff for transient errors to improve reliability.
+    * Caching: When appropriate, cache responses from external APIs to reduce redundant requests and improve application performance.
 
 7. Interactive and Iterative Feedback:
 * Ask clarifying questions: If a request is ambiguous or requires more detail, ask clarifying questions instead of making assumptions.
