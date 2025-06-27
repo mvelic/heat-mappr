@@ -29,6 +29,7 @@ Target User(s): This MVP is primarily designed for fundraising analysts, politic
 * streamlit-folium - for embedding Folium maps into Streamlit
 * TIGER/Line Shapefiles - for state mapping
 * Parquet - for API data storage
+* Git - for code
 * Docker - for containerization
 
 ### MVP Technical Approach Summary:
