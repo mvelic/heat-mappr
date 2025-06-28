@@ -1,7 +1,7 @@
 import geopandas as gpd
 import os
 
-def prepare_geographic_data(output_dir="data"):
+def prepare_geographic_data(output_dir="data/boundaries"):
     """
     Fetches US state TIGER/Line shapefile, processes it, and saves it as a 
     GeoJSON file.
@@ -13,8 +13,7 @@ def prepare_geographic_data(output_dir="data"):
     """
     # URL for the 2024 US States TIGER/Line Shapefile
     # Note: The Census Bureau updates these URLs annually.
-    # url = "https://www2.census.gov/geo/tiger/TIGER2024/STATE/tl_2024_us_state.zip"
-    raw_file = "./raw_data/tl_2024_us_state.zip"
+    raw_file = "./data/raw/tl_2024_us_state.zip"
     
     # print(f"Fetching state boundaries from: {url}")
     print(f"Fetching state boundaries from: {raw_file}")

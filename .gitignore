@@ -214,5 +214,7 @@ $RECYCLE.BIN/
 
 
 # Data Files gitignore
-raw_data/
+data/
 *.zip
+*.geojson
+*.parquet
